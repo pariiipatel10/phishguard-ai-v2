@@ -106,13 +106,9 @@ This project was developed as a cybersecurity awareness and phishing detection p
 
 ## 🌐 Live Demo
 
-Add your deployed website link here after deployment.
 
-Example:
 
-```bash
 https://phishguard-ai-v2-lklmv9og4-pari-patel-s-projects.vercel.app/
-```
 
 ---
 
