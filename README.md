@@ -107,7 +107,7 @@ This project was developed as a cybersecurity awareness and phishing detection p
 ## 🌐 Live Demo
 
 
-
+https://phishguard-ai-v2.vercel.app/
 https://phishguard-ai-v2-lklmv9og4-pari-patel-s-projects.vercel.app/
 
 ---
