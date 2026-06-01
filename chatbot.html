@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Assistant | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="dashboard.html">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="email.html">Email Scanner</a>
+            </li>
+
+            <li>
+                <a href="url.html">URL Scanner</a>
+            </li>
+            <li>
+                <a href="chatbot.html" class="active">
+                    AI Assistant
+                </a>
+            </li>
+        
+
+        </ul>
+
+    </nav>
+
+    <!-- CHATBOT -->
+
+    <section class="scanner-section">
+
+        <h1 class="scanner-title">
+            AI Cybersecurity Assistant
+        </h1>
+
+        <div class="scanner-container">
+
+            <textarea
+                id="chatInput"
+                placeholder="Ask any cybersecurity question..."
+            ></textarea>
+
+            <button
+                class="scan-btn"
+                id="askBtn"
+            >
+                Ask AI
+            </button>
+
+        </div>
+
+        <!-- RESPONSE -->
+
+        <div
+            class="result-container"
+            id="chatResult"
+            style="display:none;"
+        >
+
+            <h2 class="high-risk">
+                AI Response
+            </h2>
+
+            <p
+                class="result-text"
+                id="chatResponse"
+            >
+                AI response will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        const askBtn =
+            document.getElementById(
+                "askBtn"
+            );
+
+        askBtn.addEventListener("click", () => {
+
+            const question =
+                document.getElementById(
+                    "chatInput"
+                ).value.toLowerCase();
+
+            const chatResult =
+                document.getElementById(
+                    "chatResult"
+                );
+
+            const chatResponse =
+                document.getElementById(
+                    "chatResponse"
+                );
+
+            chatResult.style.display =
+                "block";
+
+            // LOADING
+
+            chatResponse.innerHTML =
+                "AI is analyzing your question...";
+
+            setTimeout(() => {
+
+                let response = "";
+
+                // PASSWORD
+
+                if (
+                    question.includes("password")
+                ) {
+
+                    response =
+                        "Use strong unique passwords with a combination of uppercase letters, symbols, and multi-factor authentication.";
+
+                }
+
+                // PHISHING
+
+                else if (
+                    question.includes("phishing")
+                ) {
+
+                    response =
+                        "Phishing attacks attempt to steal sensitive information through fake emails, malicious links, and impersonation tactics.";
+
+                }
+
+                // MALWARE
+
+                else if (
+                    question.includes("malware")
+                ) {
+
+                    response =
+                        "Malware is malicious software designed to damage systems, steal data, or gain unauthorized access.";
+
+                }
+
+                // VPN
+
+                else if (
+                    question.includes("vpn")
+                ) {
+
+                    response =
+                        "VPNs encrypt internet traffic and protect user privacy by masking IP addresses and securing communications.";
+
+                }
+
+                // FIREWALL
+
+                else if (
+                    question.includes("firewall")
+                ) {
+
+                    response =
+                        "A firewall monitors and filters incoming and outgoing network traffic based on security rules.";
+
+                }
+
+                // DEFAULT
+
+                else {
+
+                    response =
+                        "Cybersecurity involves protecting systems, networks, and data from digital attacks and unauthorized access.";
+
+                }
+
+                // TYPING EFFECT
+
+                typeEffect(
+                    chatResponse,
+                    response
+                );
+
+            }, 1500);
+
+        });
+
+        // TYPING EFFECT
+
+        function typeEffect(
+            element,
+            text,
+            speed = 20
+        ) {
+
+            element.innerHTML = "";
+
+            let i = 0;
+
+            function typing() {
+
+                if (i < text.length) {
+
+                    element.innerHTML +=
+                        text.charAt(i);
+
+                    i++;
+
+                    setTimeout(
+                        typing,
+                        speed
+                    );
+                }
+            }
+
+            typing();
+        }
+
+    </script>
+ <script src="static/script.js"></script>
+</body>
+
+</html>

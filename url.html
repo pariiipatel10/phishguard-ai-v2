@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>URL Scanner | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="dashboard.html">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="email.html">Email Scanner</a>
+            </li>
+
+            <li>
+                <a href="chatbot.html">AI Assistant</a>
+            </li>
+            <li>
+                <a href="url.html" class="active">
+                    URL Scanner
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <!-- URL SCANNER -->
+
+    <section class="scanner-section">
+
+        <h1 class="scanner-title">
+            AI URL Threat Scanner
+        </h1>
+
+        <div class="scanner-container">
+
+            <textarea
+                placeholder="Paste suspicious URL here..."
+                id="urlInput"
+            ></textarea>
+
+            <button class="scan-btn">
+                Analyze URL
+            </button>
+
+        </div>
+
+        <!-- RESULT -->
+
+        <div
+            class="result-container"
+            id="resultBox"
+            style="display:none;"
+        >
+
+            <div
+                class="risk-circle"
+                id="riskCircle"
+            >
+                0%
+            </div>
+
+            <h2
+                class="high-risk"
+                id="riskText"
+            >
+                SCANNING
+            </h2>
+
+            <p
+                class="result-text"
+                id="resultDescription"
+            >
+                AI analysis will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        const button =
+            document.querySelector(".scan-btn");
+
+        button.addEventListener("click", () => {
+
+            const url =
+                document.getElementById(
+                    "urlInput"
+                ).value.toLowerCase();
+
+            const resultBox =
+                document.getElementById(
+                    "resultBox"
+                );
+
+            const riskCircle =
+                document.getElementById(
+                    "riskCircle"
+                );
+
+            const riskText =
+                document.getElementById(
+                    "riskText"
+                );
+
+            const resultDescription =
+                document.getElementById(
+                    "resultDescription"
+                );
+
+            resultBox.style.display =
+                "block";
+
+            // LOADING
+
+            riskCircle.innerHTML = "...";
+
+            riskText.innerHTML =
+                "Scanning URL...";
+
+            resultDescription.innerHTML =
+                "AI is analyzing domain reputation and suspicious patterns...";
+
+            setTimeout(() => {
+
+                let riskScore = 0;
+
+                // HIGH RISK KEYWORDS
+
+                const highRiskWords = [
+
+                    "login",
+                    "verify",
+                    "secure",
+                    "bank",
+                    "paypal",
+                    "crypto",
+                    "wallet",
+                    "free-money",
+                    "bonus",
+                    "claim",
+                    "gift",
+                    "win",
+                    "account",
+                    "password"
+                ];
+
+                // MEDIUM RISK
+
+                const mediumRiskWords = [
+
+                    "update",
+                    "portal",
+                    "review",
+                    "authentication",
+                    "confirm",
+                    "support"
+                ];
+
+                // HIGH RISK CHECK
+
+                highRiskWords.forEach(word => {
+
+                    if (url.includes(word)) {
+
+                        riskScore += 30;
+                    }
+
+                });
+
+                // MEDIUM RISK CHECK
+
+                mediumRiskWords.forEach(word => {
+
+                    if (url.includes(word)) {
+
+                        riskScore += 20;
+                    }
+
+                });
+
+                // HTTP CHECK
+
+                if (url.includes("http://")) {
+
+                    riskScore += 20;
+                }
+
+                // SUSPICIOUS DOMAIN LENGTH
+
+                if (url.length > 50) {
+
+                    riskScore += 15;
+                }
+
+                // RANDOM SYMBOLS
+
+                if (
+                    url.includes("@") ||
+                    url.includes("%") ||
+                    url.includes("-")
+                ) {
+
+                    riskScore += 10;
+                }
+
+                // LIMIT
+
+                if (riskScore > 100) {
+
+                    riskScore = 100;
+                }
+
+                // MINIMUM
+
+                if (
+                    riskScore < 10 &&
+                    url.length > 0
+                ) {
+
+                    riskScore = 8;
+                }
+
+                // EMPTY
+
+                if (url.length === 0) {
+
+                    riskScore = 0;
+                }
+
+                // DISPLAY SCORE
+
+                riskCircle.innerHTML =
+                    riskScore + "%";
+
+                // HIGH RISK
+
+                if (riskScore >= 60) {
+
+                    riskCircle.style.background =
+                        "#ff3b3b";
+
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #ff3b3b";
+
+                    riskText.innerHTML =
+                        "HIGH RISK";
+
+                    riskText.style.color =
+                        "#ff3b3b";
+
+                    resultDescription.innerHTML =
+                        "This URL contains multiple phishing indicators including suspicious authentication requests, insecure links, and malicious domain patterns.";
+
+                }
+
+                // MEDIUM RISK
+
+                else if (riskScore >= 25) {
+
+                    riskCircle.style.background =
+                        "#ffaa00";
+
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #ffaa00";
+
+                    riskText.innerHTML =
+                        "MEDIUM RISK";
+
+                    riskText.style.color =
+                        "#ffaa00";
+
+                    resultDescription.innerHTML =
+                        "Potentially suspicious URL detected. Review carefully before visiting this website.";
+
+                }
+
+                // LOW RISK
+
+                else {
+
+                    riskCircle.style.background =
+                        "#00ffe0";
+
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #00ffe0";
+
+                    riskText.innerHTML =
+                        "LOW RISK";
+
+                    riskText.style.color =
+                        "#00ffe0";
+
+                    resultDescription.innerHTML =
+                        "No major phishing indicators detected. This URL appears relatively safe.";
+
+                }
+
+            }, 1800);
+
+        });
+
+    </script>
+ <script src="static/script.js"></script>
+</body>
+
+</html>

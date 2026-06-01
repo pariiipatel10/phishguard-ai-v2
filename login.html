@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="signup.html">Sign Up</a>
+            </li>
+            <li>
+                <a href="login.html" class="active">
+                    Login
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <!-- LOGIN CONTAINER -->
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+            <h1>Welcome Back</h1>
+
+            <p>
+                Login to continue protecting yourself
+                against cyber threats.
+            </p>
+<input
+    type="email"
+    placeholder="Enter Email"
+    id="loginEmail"
+>
+
+<input
+    type="password"
+    placeholder="Enter Password"
+    id="loginPassword"
+>
+<button id="loginBtn">
+    Login
+</button>
+
+
+            <div class="auth-link">
+
+                Don’t have an account?
+
+                <a href="signup.html">
+                    Sign Up
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="static/script.js"></script>
+    <script>
+    
+        const loginBtn =
+            document.getElementById(
+                "loginBtn"
+            );
+    
+        loginBtn.addEventListener(
+            "click",
+            () => {
+    
+                const email =
+                    document.getElementById(
+                        "loginEmail"
+                    ).value;
+    
+                const password =
+                    document.getElementById(
+                        "loginPassword"
+                    ).value;
+    
+                // GET SAVED USER
+    
+                const savedUser =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "phishguardUser"
+                        )
+                    );
+    
+                // CHECK USER
+    
+                if (
+                    !savedUser
+                ) {
+    
+                    alert(
+                        "No account found. Please sign up first."
+                    );
+    
+                    return;
+                }
+    
+                // VALIDATE LOGIN
+    
+                if (
+    
+                    email === savedUser.email &&
+                    password === savedUser.password
+    
+                ) {
+    
+                    alert(
+                        "Login successful!"
+                    );
+    
+                    // SAVE LOGIN SESSION
+    
+                    localStorage.setItem(
+                        "isLoggedIn",
+                        "true"
+                    );
+    
+                    // REDIRECT
+    
+                    window.location.href =
+                        "dashboard.html";
+    
+                }
+    
+                else {
+    
+                    alert(
+                        "Invalid email or password."
+                    );
+    
+                }
+    
+            }
+        );
+    
+    </script>
+    </body>
+
+</html>

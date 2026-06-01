@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sign Up | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="login.html">Login</a>
+            </li>
+            <li>
+                <a href="signup.html" class="active">
+                    Sign Up
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <!-- SIGNUP CONTAINER -->
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+            <h1>Create Account</h1>
+
+            <p>
+                Join PhishGuard AI and strengthen your
+                cybersecurity awareness.
+            </p>
+
+            
+<input
+    type="text"
+    placeholder="Full Name"
+    id="signupName"
+>
+
+<input
+    type="email"
+    placeholder="Enter Email"
+    id="signupEmail"
+>
+
+<input
+    type="password"
+    placeholder="Create Password"
+    id="signupPassword"
+>
+
+<input
+    type="password"
+    placeholder="Confirm Password"
+    id="confirmPassword"
+>
+<button id="signupBtn">
+    Sign Up
+</button>
+
+
+            <div class="auth-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="static/script.js"></script>
+    <script>
+    
+        const signupBtn =
+            document.getElementById(
+                "signupBtn"
+            );
+    
+        signupBtn.addEventListener(
+            "click",
+            () => {
+    
+                const name =
+                    document.getElementById(
+                        "signupName"
+                    ).value;
+    
+                const email =
+                    document.getElementById(
+                        "signupEmail"
+                    ).value;
+    
+                const password =
+                    document.getElementById(
+                        "signupPassword"
+                    ).value;
+    
+                const confirmPassword =
+                    document.getElementById(
+                        "confirmPassword"
+                    ).value;
+    
+                // VALIDATION
+    
+                if (
+                    !name ||
+                    !email ||
+                    !password ||
+                    !confirmPassword
+                ) {
+    
+                    alert(
+                        "Please fill all fields."
+                    );
+    
+                    return;
+                }
+    
+                if (
+                    password !== confirmPassword
+                ) {
+    
+                    alert(
+                        "Passwords do not match."
+                    );
+    
+                    return;
+                }
+    
+                // SAVE USER
+    
+                const user = {
+    
+                    name,
+                    email,
+                    password
+                };
+    
+                localStorage.setItem(
+                    "phishguardUser",
+                    JSON.stringify(user)
+                );
+    
+                alert(
+                    "Account created successfully!"
+                );
+    
+                // REDIRECT
+    
+                window.location.href =
+                    "login.html";
+    
+            }
+        );
+    
+    </script>
+    </body>
+
+</html>

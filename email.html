@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Email Scanner | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="dashboard.html">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="url.html">URL Scanner</a>
+            </li>
+
+            <li>
+                <a href="chatbot.html">AI Assistant</a>
+            </li>
+            <li>
+                <a href="email.html" class="active"></a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <!-- EMAIL SCANNER -->
+
+    <section class="scanner-section">
+
+        <h1 class="scanner-title">
+            AI Email Phishing Scanner
+        </h1>
+
+        <div class="scanner-container">
+
+            <textarea
+                placeholder="Paste suspicious email here..."
+                id="emailInput"
+            ></textarea>
+
+            <button class="scan-btn">
+                Analyze Email
+            </button>
+
+        </div>
+
+        <!-- RESULT -->
+<div
+    class="result-container"
+    id="resultBox"
+    style="display: none;"
+>
+
+    <div class="risk-circle" id="riskCircle">
+        0%
+    </div>
+
+    <h2
+        class="high-risk"
+        id="riskText"
+    >
+        HIGH RISK
+    </h2>
+
+    <p
+        class="result-text"
+        id="resultDescription"
+    >
+
+        This email contains suspicious
+        phishing indicators.
+
+    </p>
+
+</div>
+
+
+    </section>
+    <script>
+    
+        const button =
+            document.querySelector(".scan-btn");
+    
+        button.addEventListener("click", () => {
+    
+            const email =
+                document.getElementById(
+                    "emailInput"
+                ).value.toLowerCase();
+    
+            const resultBox =
+                document.getElementById(
+                    "resultBox"
+                );
+    
+            const riskCircle =
+                document.getElementById(
+                    "riskCircle"
+                );
+    
+            const riskText =
+                document.getElementById(
+                    "riskText"
+                );
+    
+            const resultDescription =
+                document.getElementById(
+                    "resultDescription"
+                );
+    
+            // SHOW RESULT BOX
+    
+            resultBox.style.display = "block";
+    
+            // LOADING EFFECT
+    
+            riskCircle.innerHTML = "...";
+    
+            riskText.innerHTML =
+                "Analyzing Threat...";
+    
+            resultDescription.innerHTML =
+                "AI is scanning suspicious patterns...";
+    
+            // AI DELAY
+    
+            setTimeout(() => {
+    
+                let riskScore = 0;
+    
+                // HIGH RISK KEYWORDS
+    
+                const highRiskWords = [
+                    "high risk",
+                    "phishing",
+                    "malicious",
+                    "scam",
+                    "fraud",
+                    "urgent",
+                    "verify",
+                    "password",
+                    "bank",
+                    "suspended",
+                    "click here",
+                    "otp",
+                    "security alert",
+                    "limited time",
+                    "account locked"
+                ];
+    
+                // MEDIUM RISK
+    
+                const mediumRiskWords = [
+                    "medium risk",
+                    "suspicious",
+                    "warning",
+                    "unusual activity",
+                    "update",
+                    "authentication",
+                    "confirm",
+                    "login",
+                    "reset",
+                    "invoice",
+                    "payment"
+                ];
+    
+                // URL DETECTION
+    
+                if (
+                    email.includes("http://") ||
+                    email.includes("https://")
+                ) {
+    
+                    riskScore += 20;
+                }
+    
+                // HIGH RISK CALCULATION
+    
+                highRiskWords.forEach(word => {
+    
+                    if (email.includes(word)) {
+    
+                        riskScore += 12;
+                    }
+    
+                });
+    
+                // MEDIUM RISK CALCULATION
+    
+                mediumRiskWords.forEach(word => {
+    
+                    if (email.includes(word)) {
+    
+                        riskScore += 6;
+                    }
+    
+                });
+    
+                // LIMIT SCORE
+    
+                if (riskScore > 100) {
+    
+                    riskScore = 100;
+                }
+    
+                // LOW RISK MINIMUM
+    
+                if (
+                    riskScore < 10 &&
+                    email.length > 0
+                ) {
+    
+                    riskScore = 12;
+                }
+    
+                // EMPTY INPUT
+    
+                if (email.length === 0) {
+    
+                    riskScore = 0;
+                }
+    
+                // DISPLAY SCORE
+    
+                riskCircle.innerHTML =
+                    riskScore + "%";
+    
+                // HIGH RISK
+    
+                if (riskScore >= 70) {
+    
+                    riskCircle.style.background =
+                        "#ff3b3b";
+    
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #ff3b3b";
+    
+                    riskText.innerHTML =
+                        "HIGH RISK";
+    
+                    riskText.style.color =
+                        "#ff3b3b";
+    
+                    resultDescription.innerHTML =
+                        "Multiple phishing indicators detected including urgency, credential requests, suspicious links, and security manipulation patterns.";
+    
+                }
+    
+                // MEDIUM RISK
+    
+                else if (riskScore >= 40) {
+    
+                    riskCircle.style.background =
+                        "#ffaa00";
+    
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #ffaa00";
+    
+                    riskText.innerHTML =
+                        "MEDIUM RISK";
+    
+                    riskText.style.color =
+                        "#ffaa00";
+    
+                    resultDescription.innerHTML =
+                        "Potentially suspicious language detected. Manual review is recommended before interacting with this email.";
+    
+                }
+    
+                // LOW RISK
+    
+                else {
+    
+                    riskCircle.style.background =
+                        "#00ffe0";
+    
+                    riskCircle.style.boxShadow =
+                        "0 0 30px #00ffe0";
+    
+                    riskText.innerHTML =
+                        "LOW RISK";
+    
+                    riskText.style.color =
+                        "#00ffe0";
+    
+                    resultDescription.innerHTML =
+                        "No strong phishing indicators detected. This email appears relatively safe.";
+    
+                }
+    
+            }, 1800);
+    
+        });
+    
+    </script>  
+     <script src="static/script.js"></script>  
+    </body>
+
+</html>

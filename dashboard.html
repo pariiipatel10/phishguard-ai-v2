@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard | PhishGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="static/style.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PhishGuard AI
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a href="dashboard.html" class="active"></a>
+            </li>
+
+            <li>
+                <a href="email.html">Email Scanner</a>
+            </li>
+
+            <li>
+                <a href="url.html">URL Scanner</a>
+            </li>
+
+            <li>
+                <a href="chatbot.html">AI Assistant</a>
+            </li>
+            <li>
+    <a href="#" id="logoutBtn">
+        Logout
+    </a>
+</li>
+
+
+        </ul>
+
+    </nav>
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard-section">
+        <h1 class="dashboard-title">
+        
+            Welcome,
+        
+            <span id="userName">
+                User
+            </span>
+        
+        </h1>
+                
+
+<!-- STATS -->
+
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+
+        <h2 id="totalThreats">
+            0
+        </h2>
+
+        <p>Total Threat Scans</p>
+
+    </div>
+
+    <div class="dashboard-card high">
+
+        <h2 id="highThreats">
+            0
+        </h2>
+
+        <p>High Risk Threats</p>
+
+    </div>
+
+    <div class="dashboard-card medium">
+
+        <h2 id="mediumThreats">
+            0
+        </h2>
+
+        <p>Medium Risk Threats</p>
+
+    </div>
+
+    <div class="dashboard-card low">
+
+        <h2 id="lowThreats">
+            0
+        </h2>
+
+        <p>Low Risk Threats</p>
+
+    </div>
+
+</div>
+<!-- CHART -->
+
+<div class="chart-wrapper">
+
+    <canvas id="threatChart"></canvas>
+
+</div>
+
+
+<!-- DYNAMIC ANALYTICS -->
+
+<script>
+
+    const total =
+        Math.floor(
+            Math.random() * 5000
+        ) + 1000;
+
+    const high =
+        Math.floor(
+            Math.random() * 500
+        );
+
+    const medium =
+        Math.floor(
+            Math.random() * 1000
+        );
+
+    const low =
+        Math.floor(
+            Math.random() * 2000
+        );
+
+    document.getElementById(
+        "totalThreats"
+    ).innerHTML = total;
+
+    document.getElementById(
+        "highThreats"
+    ).innerHTML = high;
+
+    document.getElementById(
+        "mediumThreats"
+    ).innerHTML = medium;
+
+    document.getElementById(
+        "lowThreats"
+    ).innerHTML = low;
+
+</script>
+
+
+<script src="static/script.js"></script>
+<script>
+
+    const isLoggedIn =
+        localStorage.getItem(
+            "isLoggedIn"
+        );
+
+    // PROTECT DASHBOARD
+
+    if (
+        isLoggedIn !== "true"
+    ) {
+
+        alert(
+            "Please login first."
+        );
+
+        
+const logoutBtn =
+    document.getElementById(
+        "logoutBtn"
+    );
+
+logoutBtn.addEventListener(
+    "click",
+    () => {
+
+        // REMOVE SESSION
+
+        localStorage.removeItem(
+            "isLoggedIn"
+        );
+
+        alert(
+            "Logged out successfully."
+        );
+
+        // REDIRECT
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+    }
+
+</script>
+<script>
+
+    const user =
+        JSON.parse(
+            localStorage.getItem(
+                "phishguardUser"
+            )
+        );
+
+    if (user) {
+
+        document.getElementById(
+            "userName"
+        ).innerHTML = user.name;
+
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const ctx =
+        document.getElementById(
+            "threatChart"
+        );
+
+    new Chart(ctx, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: [
+
+                "High Risk",
+                "Medium Risk",
+                "Low Risk"
+            ],
+
+            datasets: [{
+
+                data: [
+
+                    Math.floor(
+                        Math.random() * 500
+                    ),
+
+                    Math.floor(
+                        Math.random() * 1000
+                    ),
+
+                    Math.floor(
+                        Math.random() * 2000
+                    )
+                ],
+
+                backgroundColor: [
+
+                    "#ff3b3b",
+                    "#ffaa00",
+                    "#00ffe0"
+                ],
+
+                borderWidth: 2
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    labels: {
+
+                        color: "white",
+
+                        font: {
+                            size: 15
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+
+</html>
